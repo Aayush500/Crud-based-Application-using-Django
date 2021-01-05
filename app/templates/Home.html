@@ -1,0 +1,62 @@
+{% extends 'Basic.html'%}
+
+{% block head %}
+{% endblock %}
+
+{% block content%}
+<div class="row">
+<div class="col-sm-4">
+    <div class="alert alert-primary" role="alert">
+        <center>
+            <strong>
+               Add New Student
+            </strong>
+       </center> 
+    </div>
+    <form action="", method="POST">
+    {% csrf_token %}
+        {% for field in forms%}
+            <div class="form-group">
+                <label for="{{field.id_for_label}}">{{field.label}}</label>
+                {{field}}
+            </div>
+            {% endfor %}
+            <button class="btn btn-success" type="submit">submit</button>
+        </form>
+</div>
+
+<div class="col-sm-8">
+    <div class="alert alert-primary" role="alert">
+        <center>
+            <strong>
+               Show Students Data
+            </strong>
+       </center> 
+    </div>
+    <table class="table table-borderless">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Action</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.password}}</td>
+            <td>
+                <a class="btn btn-warning btn-sm" href="{% url 'edit' user.id %}">Edit</a>
+                <form class="d-inline" action="{% url 'delete' user.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
+{% endblock %}
